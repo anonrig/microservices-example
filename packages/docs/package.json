@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "@microservices/docs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,8 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "redoc": "^2.0.0-rc.53",
-    "styled-components": "^5.2.3"
+    "styled-components": "^5.2.3",
+    "tailwindcss": "^2.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",
@@ -26,8 +27,7 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "postcss": "^8.2.10",
-    "prettier": "^2.2.1",
-    "tailwindcss": "^2.1.1"
+    "prettier": "^2.2.1"
   },
   "browserslist": {
     "production": [
