@@ -1,3 +1,4 @@
+packages/*/.next
 packages/*/node_modules
 packages/*/coverage
 lerna-debug.log
