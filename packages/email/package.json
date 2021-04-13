@@ -1,12 +1,12 @@
 {
-  "name": "email",
+  "name": "@microservices/email",
   "version": "1.0.0",
   "type": "module",
   "description": "> TODO: description",
   "author": "Yagiz Nizipli <yagiz@nizipli.com>",
   "homepage": "",
   "license": "ISC",
-  "main": "src/email.js",
+  "main": "src/index.js",
   "directories": {
     "src": "src"
   },
@@ -20,6 +20,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.2.12",
     "@grpc/proto-loader": "^0.6.0",
+    "@microservices/proto": "^1.0.0",
     "consola": "^2.15.3",
     "eslint": "^7.24.0",
     "mali": "^0.41.2"

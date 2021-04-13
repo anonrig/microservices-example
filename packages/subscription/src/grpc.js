@@ -11,8 +11,14 @@ const options = {
   defaults: true,
   oneofs: true,
 }
-const file = path.join(path.resolve(''), '../../protofiles/subscriptions.proto')
-const health = path.join(path.resolve(''), '../../protofiles/health.proto')
+const file = path.join(
+  path.resolve('.'),
+  './node_modules/@microservices/proto/lib/subscriptions.proto',
+)
+const health = path.join(
+  path.resolve('.'),
+  './node_modules/@microservices/proto/lib/health.proto',
+)
 
 const app = new Mali()
 

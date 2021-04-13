@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "microservices",
   "private": true,
   "type": "module",
   "devDependencies": {
