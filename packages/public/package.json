@@ -1,0 +1,44 @@
+{
+  "name": "public",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Yagiz Nizipli <yagiz@nizipli.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "src/index.js",
+  "type": "module",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "c8 ava",
+    "test:watch": "c8 ava --watch"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.2.12",
+    "@grpc/proto-loader": "^0.6.0",
+    "consola": "^2.15.3",
+    "eslint": "^7.24.0",
+    "fastify": "^3.14.2",
+    "fastify-compress": "^3.4.2",
+    "fastify-helmet": "^5.3.1",
+    "fastify-metrics": "^7.1.0",
+    "fastify-sensible": "^3.1.1",
+    "under-pressure": "^5.6.0"
+  },
+  "devDependencies": {
+    "ava": "^3.15.0",
+    "c8": "^7.7.1",
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-security": "^1.4.0",
+    "quibble": "^0.6.5",
+    "uuid": "^8.3.2"
+  }
+}
