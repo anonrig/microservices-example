@@ -2,7 +2,7 @@ import grpc from '@grpc/grpc-js'
 import loader from '@grpc/proto-loader'
 import path from 'path'
 import { subscriptionsUrl } from './config.js'
-import promisifyAll from '../../../libraries/promisify-all.js'
+import promisifyAll from './libraries/promisify-all.js'
 
 const defaults = {
   keepCase: true,
