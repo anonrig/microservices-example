@@ -1,0 +1,11 @@
+@import 'https://rsms.me/inter/inter.css';
+
+html,
+body {
+  @apply h-full
+  w-full
+  bg-white
+  font-sans
+  antialiased
+  m-0;
+}
