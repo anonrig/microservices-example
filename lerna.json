@@ -1,4 +1,9 @@
 {
   "packages": ["packages/*"],
-  "version": "independent"
+  "version": "0.1.0",
+  "command": {
+    "boostrap": {
+      "npmClientArgs": ["--force", "--legacy-peer-deps"]
+    }
+  }
 }

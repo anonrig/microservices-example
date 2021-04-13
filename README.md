@@ -43,3 +43,7 @@ GRPC microservices:
 ## Privacy Issues
 
 - Subscription microservice is not GDPR friendly. We shouldn't store any personal information unless we particularly need it. Since some of the issues regarding personal information was inside the task itself, I left it there, but in order comply with the regulations, I didn't soft delete a subscription but removed it completely upon cancellation.
+
+## Development Issues
+
+- Lerna npmClientArgs does not work for Node 15 & NPM 7. Please refer to https://github.com/n8n-io/n8n/issues/1149. In order to solve installation issues you need to run `npm config set legacy-peer-deps true`
