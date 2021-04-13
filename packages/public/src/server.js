@@ -5,6 +5,8 @@ import compress from 'fastify-compress'
 import helmet from 'fastify-helmet'
 import sensible from 'fastify-sensible'
 import metrics from 'fastify-metrics'
+import rateLimiting from 'fastify-rate-limit'
+import swagger from 'fastify-swagger'
 
 import grpcjs from '@grpc/grpc-js'
 
@@ -51,13 +53,44 @@ export async function build() {
     }
   })
 
+  server.register(swagger, {
+    routePrefix: '/docs',
+    openapi: {
+      info: {
+        title: 'Subscription Public API',
+        description: 'Subscriptions API documentation',
+        version: '0.1.0',
+        contact: {
+          name: 'Yagiz Nizipli',
+          url: 'https://yagiz.co',
+          email: 'yagiz@nizipli.com',
+        },
+      },
+    },
+    uiConfig: {
+      deepLinking: true,
+      showCommonExtensions: true,
+      tryItOutEnabled: false,
+    },
+    exposeRoute: true,
+  })
+
+  server.register(rateLimiting, { max: 100, timeWindow: '1 minute' })
+
   server.register(pressure, {
+    exposeStatusRoute: {
+      routeOpts: {
+        logLevel: 'debug',
+      },
+      routeSchemaOpts: {
+        hide: true,
+      },
+      url: '/health',
+    },
     healthCheck: async function () {
-      // await pg.raw('select 1+1 as result')
       return true
     },
-    healthCheckInterval: 1000,
-    exposeStatusRoute: '/health',
+    healthCheckInterval: 60000,
   })
 
   server.register(sensible, {
