@@ -1,6 +1,5 @@
 import { RedocStandalone } from 'redoc'
 import { NextSeo } from 'next-seo'
-
 import { docsUrl } from '../config.js'
 
 export async function getServerSideProps(ctx) {
