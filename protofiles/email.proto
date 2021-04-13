@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service Email {
+  rpc send (EmailRequest) returns (Empty) {}
+}
+
+message Empty {}
+
+message EmailRequest {
+  string to = 1;
+  string title = 2;
+  string body = 3;
+}
