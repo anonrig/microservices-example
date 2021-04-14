@@ -1,9 +1,10 @@
 import { RedocStandalone } from 'redoc'
 import { NextSeo } from 'next-seo'
-import { docsUrl } from '../config.js'
+import config from 'next/config'
 
 export async function getServerSideProps(ctx) {
-  const response = await fetch(docsUrl)
+  const { serverRuntimeConfig } = config()
+  const response = await fetch(serverRuntimeConfig.docsUrl)
   return {
     props: {
       spec: await response.json(),

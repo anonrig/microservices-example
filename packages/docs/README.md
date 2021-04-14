@@ -7,10 +7,10 @@
 
 ## Environment variables
 
-| Name                 |         Default Value         |            Description            |
-| :------------------- | :---------------------------: | :-------------------------------: |
-| PORT                 |             3003              |      Port number to work in       |
-| PUBLIC_NEXT_DOCS_URL | http://0.0.0.0:3000/docs/json | OpenAPI 3 specification JSON path |
+| Name     |         Default Value         |            Description            |
+| :------- | :---------------------------: | :-------------------------------: |
+| PORT     |             3003              |      Port number to work in       |
+| DOCS_URL | http://0.0.0.0:3000/docs/json | OpenAPI 3 specification JSON path |
 
 ## Running
 
