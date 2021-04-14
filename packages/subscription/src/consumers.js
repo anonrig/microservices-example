@@ -1,4 +1,9 @@
 import * as Subscription from './models/subscription.js'
+import Logger from './logger.js'
+import { producer } from './kafka.js'
+import { sendEmailTopic } from './config.js'
+
+const logger = Logger.create().withScope('consumers')
 
 export async function findAll(ctx) {
   ctx.res = {
@@ -12,7 +17,19 @@ export async function findOne(ctx) {
 }
 
 export async function create(ctx) {
-  ctx.res = await Subscription.create(ctx.req)
+  const subscription = await Subscription.create(ctx.req)
+
+  logger.withTag('create').info(`Sending an email to ${ctx.req.email}`)
+
+  setImmediate(
+    async () =>
+      await producer.send({
+        topic: sendEmailTopic,
+        messages: [{ value: JSON.stringify(ctx.req) }],
+      }),
+  )
+
+  ctx.res = subscription
 }
 
 export async function cancel(ctx) {
