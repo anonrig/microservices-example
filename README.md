@@ -4,10 +4,13 @@ This is an example microservices architecture which uses GRPC communication betw
 
 Each microservice supports both GRPC communication and consumption through Kafka topics. If you need to get a response from a certain microservice, GRPC is recommended. If the task can be done asyncronously, please do it within Kafka's boundaries.
 
+## Architecture Overview
+
+![Architecture Overview](https://raw.githubusercontent.com/anonrig/microservices-example/main/k8s/architecture.png)
+
 ## Requirements
 
-- NPM
-- Docker
+- Node (preferably >= 15, since ESM is enabled by default)
 - PostgreSQL (preferably >= 12)
 - Kafka
 
