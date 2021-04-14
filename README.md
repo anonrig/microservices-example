@@ -28,6 +28,8 @@ GRPC microservices:
 
 - supports `grpc.health.v1.Health` grpc health checks
 
+For further information regarding Kubernets deployment, please look into the k8s folder.
+
 ### Security
 
 - inter microservice communication
