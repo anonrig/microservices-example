@@ -27,7 +27,6 @@ export async function build() {
 
   // customize error handler to distinguish grpc, internal and http errors
   server.setErrorHandler(async (error) => {
-    console.error(error)
     if (error.code) {
       // Handle grpc related error codes.
       switch (error.code) {

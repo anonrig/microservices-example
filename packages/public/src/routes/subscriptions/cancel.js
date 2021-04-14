@@ -68,7 +68,7 @@ export default {
         topic: subscriptionDeleteTopic,
         messages: [
           {
-            value: { subscription_id },
+            value: JSON.stringify({ subscription_id }),
             timestamp: Date.now(),
           },
         ],
