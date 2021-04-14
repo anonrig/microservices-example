@@ -42,5 +42,18 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-security": "^1.4.0",
     "quibble": "^0.6.5"
+  },
+  "ava": {
+    "files": [
+      "__tests__/**/*.test.js"
+    ],
+    "failFast": true,
+    "environmentVariables": {
+      "CI": "true"
+    },
+    "nodeArguments": [
+      "--loader=quibble",
+      "--no-warnings"
+    ]
   }
 }
