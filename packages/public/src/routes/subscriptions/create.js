@@ -1,5 +1,8 @@
 import { v4 } from 'uuid'
 import grpc from '../../grpc.js'
+import { producer } from '../../kafka.js'
+import { subscriptionCreateTopic } from '../../config.js'
+import logger from '../../logger.js'
 
 export default {
   method: 'POST',
@@ -78,6 +81,32 @@ export default {
       },
     },
   },
-  // preHandler: verify,
-  handler: async ({ body }) => grpc.subscriptions.create(body),
+  handler: async ({ body }) => {
+    const subscription_id = v4()
+
+    try {
+      // first try to send it using grpc to check availability.
+      await grpc.subscriptions.create(
+        Object.assign({}, body, { subscription_id }),
+      )
+    } catch (error) {
+      // if no grpc clients are available to handle request, put it in the queue
+      logger.warn(
+        `Received exception while cancelling subscription. Trying on Kafka queue.`,
+        error.message,
+      )
+
+      await producer.send({
+        topic: subscriptionCreateTopic,
+        messages: [
+          {
+            value: JSON.stringify(Object.assign({}, body, { subscription_id })),
+            timestamp: Date.now(),
+          },
+        ],
+      })
+    }
+
+    return { subscription_id }
+  },
 }

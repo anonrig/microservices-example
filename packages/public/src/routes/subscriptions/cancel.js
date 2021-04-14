@@ -1,5 +1,8 @@
 import { v4 } from 'uuid'
 import grpc from '../../grpc.js'
+import { producer } from '../../kafka.js'
+import { subscriptionDeleteTopic } from '../../config.js'
+import logger from '../../logger.js'
 
 export default {
   method: 'DELETE',
@@ -49,6 +52,28 @@ export default {
     },
   },
   // preHandler: verify,
-  handler: async ({ params: { subscription_id } }) =>
-    grpc.subscriptions.cancel({ subscription_id }),
+  handler: async ({ params: { subscription_id } }) => {
+    try {
+      // first try to send it using grpc to check availability.
+      await grpc.subscriptions.cancel({ subscription_id })
+      return { subscription_id }
+    } catch (error) {
+      // if no grpc clients are available to handle request, put it in the queue
+
+      logger.warn(
+        `Received exception while cancelling subscription. Trying on Kafka queue.`,
+        error.message,
+      )
+      await producer.send({
+        topic: subscriptionDeleteTopic,
+        messages: [
+          {
+            value: { subscription_id },
+            timestamp: Date.now(),
+          },
+        ],
+      })
+      return { subscription_id }
+    }
+  },
 }

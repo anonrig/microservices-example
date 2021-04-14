@@ -14,10 +14,7 @@ const defaults = {
 
 const { Subscriptions } = grpc.loadPackageDefinition(
   loader.loadSync(
-    path.join(
-      path.resolve('.'),
-      './node_modules/@microservices/proto/lib/subscriptions.proto',
-    ),
+    path.join(path.resolve('.'), './protofiles/subscriptions.proto'),
     defaults,
   ),
 )

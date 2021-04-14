@@ -1,6 +1,7 @@
 import { port } from './config.js'
 import logger from './logger.js'
 import { build } from './server.js'
+import { producer } from './kafka.js'
 
 async function run() {
   const server = await build()
@@ -9,6 +10,8 @@ async function run() {
     .withScope('application')
     .withTag('run')
     .success(`Application booted on port=${port}`)
+  await producer.connect()
+  logger.success('Kafka connection established')
 }
 
 run()
