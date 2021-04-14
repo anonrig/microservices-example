@@ -1,0 +1,120 @@
+version: '3.9'
+
+services:
+  docs:
+    build:
+      context: ./packages/docs
+    working_dir: /usr/src/app
+    volumes:
+      - ./packages/docs:/usr/src/app
+    environment:
+      DOCS_URL: 'http://public:3000/docs/json'
+    networks:
+      - app-network
+    ports:
+      - "3003:3000"
+    depends_on:
+      - public
+
+  public:
+    restart: always
+    build:
+      context: ./packages/public
+    working_dir: /usr/src/app
+    volumes:
+      - ./packages/public:/usr/src/app
+    environment:
+      SUBSCRIPTIONS_URL: 'subscription:3001'
+      KAFKA_BROKER: 'kafka:9092'
+    networks:
+      - app-network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - kafka
+      - subscription
+
+  subscription:
+    restart: always
+    build:
+      context: ./packages/subscription
+    working_dir: /usr/src/app
+    volumes:
+      - ./packages/subscription:/usr/src/app
+    environment:
+      PGHOST: 'postgresql'
+      EMAIL_URL: 'email:3002'
+      KAFKA_BROKER: 'kafka:9092'
+    depends_on:
+      - postgresql
+      - kafka
+    networks:
+      - app-network
+    ports:
+      - "3001"
+
+  email:
+    restart: always
+    build:
+      context: ./packages/email
+    working_dir: /usr/src/app
+    volumes:
+      - ./packages/email:/usr/src/app
+    networks:
+      - app-network
+    ports:
+      - "3002"
+
+  zookeeper:
+    image: docker.io/bitnami/zookeeper:3
+    ports:
+      - "2181:2181"
+    volumes:
+      - "zookeeper_data:/bitnami"
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: 'yes'
+    networks:
+      - app-network
+
+  kafka:
+    image: docker.io/bitnami/kafka:2
+    ports:
+      - "9093:9093"
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+      ALLOW_PLAINTEXT_LISTENER: 'yes'
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: 'CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT'
+      KAFKA_CFG_LISTENERS: 'CLIENT://:9092,EXTERNAL://:9093'
+      KAFKA_CFG_ADVERTISED_LISTENERS: 'CLIENT://kafka:9092,EXTERNAL://localhost:9093'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'CLIENT'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '1'
+    networks:
+      - app-network
+    depends_on:
+      - zookeeper
+
+  postgresql:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: subscriptions
+      POSTGRES_USER: subscription-worker
+      POSTGRES_PASSWORD: MYSUPERSECRETKEY
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
