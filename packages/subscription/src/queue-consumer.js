@@ -30,6 +30,9 @@ export async function listenToQueue() {
       if (topic === subscriptionCreateTopic) {
         await Subscriptions.create(payload)
 
+        logger
+          .withTag('consumer.eachMessage')
+          .info(`Sending an email to ${payload.email}`)
         setImmediate(
           async () =>
             await producer.send({
