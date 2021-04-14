@@ -37,3 +37,7 @@ helm install -f ./public-values.yaml public-worker ./charts/http-microserice-cha
 ```bash
 helm install -f ./subscription-values.yaml subscription-worker ./charts/grpc-microserice-chart -n microservices
 ```
+
+### Recommended CI/CD Pipeline with GitOps
+
+![CI/CD Pipeline Overview](https://raw.githubusercontent.com/anonrig/microservices-example/main/k8s/ci-cd-pipeline.png)
