@@ -1,6 +1,5 @@
 import grpc from '@grpc/grpc-js'
 import dayjs from 'dayjs'
-import { v4 } from 'uuid'
 import pg from '../pg.js'
 
 export async function findAll({
@@ -52,6 +51,7 @@ export async function findOne({ subscription_id }) {
 }
 
 export async function create({
+  subscription_id,
   email,
   first_name,
   gender,
@@ -62,7 +62,7 @@ export async function create({
   await pg
     .queryBuilder()
     .insert({
-      subscription_id: v4(),
+      subscription_id,
       email,
       first_name,
       gender,
