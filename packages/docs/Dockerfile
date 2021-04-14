@@ -17,7 +17,7 @@ RUN npm run build
 FROM node:alpine AS runner
 WORKDIR /app
 
-ENV PORT 3003
+ENV PORT 3000
 ENV NODE_ENV production
 
 COPY --from=builder /app/next.config.js ./
@@ -31,7 +31,7 @@ RUN adduser -S nextjs -u 1001
 RUN chown -R nextjs:nodejs /app/.next
 USER nextjs
 
-EXPOSE 3003
+EXPOSE 3000
 
 RUN npx next telemetry disable
 
