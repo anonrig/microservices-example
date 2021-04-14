@@ -1,4 +1,6 @@
+import { sendEmail } from './provider.js'
+
 export async function send(ctx) {
-  const { title, body, to } = ctx.req
+  await sendEmail(ctx.req)
   ctx.res = {}
 }
