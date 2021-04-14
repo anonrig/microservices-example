@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: public-environment
+  namespace: microservices
+type: Opaque
+data:
+  NODE_ENV: cHJvZHVjdGlvbg==
+  TZ: VVRD
+
+---------
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: subscription-environment
+  namespace: microservices
+type: Opaque
+data:
+  NODE_ENV: cHJvZHVjdGlvbg==
+  TZ: VVRD
+
+---------
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: email-environment
+  namespace: microservices
+type: Opaque
+data:
+  NODE_ENV: cHJvZHVjdGlvbg==
+  TZ: VVRD

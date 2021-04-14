@@ -1,0 +1,61 @@
+replicaCount: 1
+
+image:
+  repository: "registry.gitlab.com/yagiznizipli/store"
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets:
+  - name: "subscription-registry"
+nameOverride: "subscription"
+fullnameOverride: "subscription"
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "subscription-account"
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 3001
+
+ingress:
+  enabled: false
+  tls: []
+
+resources:
+  limits:
+    cpu: 150m
+    memory: 150Mi
+  requests:
+    cpu: 100m
+    memory: 100Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+application:
+  secretName: "subscription-environment"

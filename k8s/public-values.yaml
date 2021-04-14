@@ -1,0 +1,72 @@
+replicaCount: 1
+
+image:
+  repository: "anonrig/public"
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets:
+  - name: "public-registry"
+nameOverride: "public"
+fullnameOverride: "public"
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "public-account"
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 3000
+
+ingress:
+  enabled: true
+  annotations: {}
+  hosts:
+    - host: public.yagiz.co
+      paths:
+      - path: /
+        backend:
+          serviceName: public
+          servicePort: 3000
+  tls:
+   - secretName: "public-tls"
+     hosts:
+       - public.yagiz.co
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+application:
+  secretName: "public-environment"
