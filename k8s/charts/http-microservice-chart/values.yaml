@@ -1,0 +1,72 @@
+replicaCount: 1
+
+image:
+  repository: "registry.gitlab.com/yagiznizipli/pkg"
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets:
+  - name: "pkg-registry"
+nameOverride: "pkg"
+fullnameOverride: "pkg"
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "pkg-account"
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 3000
+
+ingress:
+  enabled: true
+  annotations: {}
+  hosts:
+    - host: pkg.yagiz.co
+      paths:
+      - path: /
+        backend:
+          serviceName: pkg
+          servicePort: 3000
+  tls:
+   - secretName: "pkg-tls"
+     hosts:
+       - pkg.yagiz.co
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+application:
+  secretName: "pkg-environment"

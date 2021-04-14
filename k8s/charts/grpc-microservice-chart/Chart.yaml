@@ -1,0 +1,6 @@
+apiVersion: v2
+name: grpc-chart
+description: A Helm chart for GRPC microservices
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
