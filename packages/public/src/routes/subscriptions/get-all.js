@@ -86,5 +86,8 @@ export default {
       },
     },
   },
-  handler: async ({ query }) => grpc.subscriptions.findAll(query),
+  handler: async ({ query }) => {
+    const { rows } = await grpc.subscriptions.findAll(query)
+    return rows
+  },
 }
