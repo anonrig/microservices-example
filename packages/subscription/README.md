@@ -7,10 +7,13 @@
 
 ## Environment variables
 
-| Name      | Default Value |      Description       |
-| :-------- | :-----------: | :--------------------: |
-| PORT      |     3001      | Port number to work in |
-| EMAIL_URL | 0.0.0.0:3002  |     Email GRPC url     |
+| Name                    |    Default Value    |       Description       |
+| :---------------------- | :-----------------: | :---------------------: |
+| PORT                    |        3001         | Port number to work in  |
+| EMAIL_URL               |    0.0.0.0:3002     |     Email GRPC url      |
+| KAFKA_CLIENT_ID         | subscription-worker |     Kafka client id     |
+| KAFKA_BROKER            |   localhost:9093    |  Kafka broker endpoint  |
+| KAFKA_CONSUMER_GROUP_ID | subscription-group  | Kafka consumer group id |
 
 ## Preparation
 

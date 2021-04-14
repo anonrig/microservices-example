@@ -1,4 +1,4 @@
-import { kafkaClientId, kafkaBroker } from './config.js'
+import { kafkaClientId, kafkaBroker, kafkaConsumerGroupId } from './config.js'
 import { Kafka, logLevel } from 'kafkajs'
 
 export const kafka = new Kafka({
@@ -8,4 +8,4 @@ export const kafka = new Kafka({
 })
 
 export const producer = kafka.producer()
-export const consumer = kafka.consumer({ groupId: 'subscription-group' })
+export const consumer = kafka.consumer({ groupId: kafkaConsumerGroupId })
