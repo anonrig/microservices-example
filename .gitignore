@@ -1,5 +1,8 @@
 node_modules/
+packages/*/protofiles
 packages/*/.next
 packages/*/node_modules
 packages/*/coverage
 lerna-debug.log
+
+postgresql/
